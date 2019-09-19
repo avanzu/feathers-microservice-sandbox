@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Cinema Service",
+            "address": "localhost",
+            "port": 56746,
+            "localRoot": "${workspaceFolder}/cinema-service",
+            "remoteRoot": "/usr/src/app"
+          },
+          {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Users Service",
+            "address": "localhost",
+            "port": 56748,
+            "localRoot": "${workspaceFolder}/users-service",
+            "remoteRoot": "/usr/src/app"
+          }
+    ]
+}

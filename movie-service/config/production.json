@@ -1,0 +1,4 @@
+{
+  "host": "movie-service-app.feathersjs.com",
+  "port": "PORT"
+}
