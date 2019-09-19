@@ -7,16 +7,16 @@
     "default": 10,
     "max": 50
   },
+  "mongodb": "mongodb://mongo:27017/cinema_service",
   "users-service" : {
     "uri" : "http://users-server:3050"
   },
   "authentication": {
     "entity": "user",
-    "service": "clients",
+    "service": "users",
     "secret": "UL79aaOLaJEDP5soQk4terGw4bc=",
     "authStrategies": [
-      "jwt",
-      "local"
+      "jwt"
     ],
     "jwtOptions": {
       "header": {
@@ -26,19 +26,8 @@
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"
-    },
-    "local": {
-      "usernameField": "email",
-      "passwordField": "password"
-    },
-    "oauth": {
-      "redirect": "/",
-      "google": {
-        "key": "<google oauth key>",
-        "secret": "<google oauth secret>"
-      }
     }
-  },
-  "nedb": "../data",
-  "mongodb": "mongodb://mongo:27017/cinema_service"
+    
+  }
+  
 }
