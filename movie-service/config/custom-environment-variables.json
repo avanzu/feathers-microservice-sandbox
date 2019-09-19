@@ -1,0 +1,6 @@
+{
+  "port": "SERVER_PORT",
+    "authentication": {
+        "secret": "JWT_SECRET"
+      }
+}

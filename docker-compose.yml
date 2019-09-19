@@ -17,41 +17,6 @@ services:
       - 27017:27017
     networks:
         sandbox:
-  cinema-server:
-    build:
-      context: ./cinema-service/
-      dockerfile: Dockerfile
-    image: app:cinema-server
-    volumes:
-      - ./cinema-service/:/usr/src/app/:rw
-    environment:
-      NODE_ENV: development
-      WAIT_HOSTS: mongo:27017
-    ports:
-      - "3030:3030"
-      - "56746:56746"
-    networks:
-      sandbox:
-    depends_on:
-      - mongo
-
-  movie-server:
-    build:
-      context: ./movie-service/
-      dockerfile: Dockerfile
-    image: app:movie-server
-    volumes:
-      - ./movie-service/:/usr/src/app/:rw
-    environment:
-      NODE_ENV: development
-      WAIT_HOSTS: mongo:27017
-    ports:
-      - "3040:3040"
-      - "56747:56747"
-    networks:
-      sandbox:
-    depends_on:
-      - mongo
 
   users-server:
     build:
@@ -61,16 +26,59 @@ services:
     volumes:
       - ./users-service/:/usr/src/app/:rw
     environment:
-      NODE_ENV: development
+      NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      SERVER_PORT: ${USERS_PORT}
       WAIT_HOSTS: mongo:27017
     ports:
-      - "3050:3050"
+      - "${USERS_PORT}:${USERS_PORT}"
       - "56748:56748"
     networks:
       sandbox:
     depends_on:
-      - mongo      
+      - mongo
       
+  cinema-server:
+    build:
+      context: ./cinema-service/
+      dockerfile: Dockerfile
+    image: app:cinema-server
+    volumes:
+      - ./cinema-service/:/usr/src/app/:rw
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      SERVER_PORT: ${CINEMAS_PORT}
+      WAIT_HOSTS: mongo:27017, users-server:${USERS_PORT}
+    ports:
+      - "${CINEMAS_PORT}:${CINEMAS_PORT}"
+      - "56746:56746"
+    networks:
+      sandbox:
+    depends_on:
+      - mongo
+      - users-server
+
+  movie-server:
+    build:
+      context: ./movie-service/
+      dockerfile: Dockerfile
+    image: app:movie-server
+    volumes:
+      - ./movie-service/:/usr/src/app/:rw
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      SERVER_PORT: ${MOVIES_PORT}
+      WAIT_HOSTS: mongo:27017, users-server:${USERS_PORT}
+    ports:
+      - "${MOVIES_PORT}:${MOVIES_PORT}"
+      - "56747:56747"
+    networks:
+      sandbox:
+    depends_on:
+      - mongo
+      - users-server
 networks: 
-  sandbox:   
+  sandbox:
     
