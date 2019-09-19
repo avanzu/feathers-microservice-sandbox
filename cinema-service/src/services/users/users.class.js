@@ -5,6 +5,7 @@ const auth     = require('@feathersjs/authentication-client')
 const storage  = require('localstorage-memory')
 
 const tokenizer     = service => id => service.createAccessToken({ server: id })
+
 const authenticator = socket => accessToken => new Promise((resolve, reject) => {
     const event = { strategy: 'jwt', accessToken }
     const done  = (error, result) => error ? reject(error) : resolve(result)
@@ -30,17 +31,17 @@ const createClient = ({ authentication, serverId, uri, storage }) => {
 
 
 module.exports = ({uri}, app) => {
+    
     const authentication = app.service('authentication')
     const serverId       = app.get('serverId')
     const client         = createClient({uri, serverId, authentication, storage })
-    const service        = (name) => Promise.resolve(client.service(name))
+
+    const service        = name => Promise.resolve(client.service(name))
 
     return {
-        id : 'id',
-        get: (id, params) =>
-            service('users').then(service => service.get(id, params)),
-        find: (params) =>
-            service('users').then(service => service.find(params))
+        id  : 'id',
+        get : (id, params) => service('users').then(service => service.get(id, params)),
+        find: (params)     => service('users').then(service => service.find(params))
     }
 
 
