@@ -46,7 +46,7 @@
     "feathers-nedb": "^5.0.1",
     "helmet": "^3.21.0",
     "mongodb-core": "^3.2.7",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "nedb": "^1.8.0",
     "serve-favicon": "^2.5.0",
     "socket.io-client": "^2.2.0",
